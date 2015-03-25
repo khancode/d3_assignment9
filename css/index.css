@@ -22,8 +22,11 @@ rect:hover {
 }
 
 #farm {
-    width:1500px;
+    width:1250px;
     margin: 0 auto;
+
+    display:block;
+    overflow:auto;
 }
 
 #viz_container {
@@ -35,24 +38,24 @@ rect:hover {
 
 #filter_container {
     display: inline-block;
-    width:150px;
-    height: 700px;
+    width:250px;
+    float:left;
 }
 
-#container {
-    width: 300px;
-    background-color: #ffcc33;
-    margin: auto;
-}
-#first {
-    width: 100px;
-    float: left;
-    height: 300px;
-    background-color: blue;
-}
-#second {
-    width: 200px;
-    float: left;
-    height: 300px;
-    background-color: green;
-}
+/*#container {*/
+    /*width: 300px;*/
+    /*background-color: #ffcc33;*/
+    /*margin: auto;*/
+/*}*/
+/*#first {*/
+    /*width: 100px;*/
+    /*float: left;*/
+    /*height: 300px;*/
+    /*background-color: blue;*/
+/*}*/
+/*#second {*/
+    /*width: 200px;*/
+    /*float: left;*/
+    /*height: 300px;*/
+    /*background-color: green;*/
+/*}*/
