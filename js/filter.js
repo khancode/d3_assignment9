@@ -34,7 +34,7 @@ function Filter() {
             print(category);
 
             $stacked_bar_chart.removeFarm();
-            $bar_chart.farm();
+            $bar_chart.farm(category);
         });
     }
 };

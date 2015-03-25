@@ -4,4 +4,4 @@
 
 $stacked_bar_chart.farm();
 
-//$bar_chart.farm();
+//$bar_chart.farm('Worldwide Gross $');

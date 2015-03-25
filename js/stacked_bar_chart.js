@@ -43,7 +43,7 @@ function StackedBarChart() {
 
         d3.csv("Movies.csv", function (error, data) {
 
-            var newData = Array();
+            var newData = new Array();
 
             for (d in data) {
                 newData.push([]);
@@ -57,6 +57,15 @@ function StackedBarChart() {
             // holds Production Budget $, Domestic Gross $, and
             // Worldwide Gross $ values.
             data = newData;
+
+            /* DEBUG purposes */
+            for (d in data){
+                console.log('d('+d+'): ');
+                console.log('\tMovie: ' + data[d]['Movie']);
+                console.log('\tWorldwide Gross $: ' + data[d]['Worldwide Gross $'])
+            }
+
+            //console.log('data: ' + JSON.stringify(data));
 
             color.domain(d3.keys(data[0]).filter(function (key) {
                 return key !== "Movie";
@@ -147,7 +156,7 @@ function StackedBarChart() {
 
     this.removeFarm = function() {
         d3.select('svg').remove();
-    }
+    };
 
     /**
      * Private functions
