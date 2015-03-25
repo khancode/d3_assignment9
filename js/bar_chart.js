@@ -29,7 +29,7 @@ function BarChart() {
             //.ticks(10, "%");
             .tickFormat(d3.format(".2s"));
 
-        var svg = d3.select("body").append("svg")
+        var svg = d3.select("#viz_container").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", labelPadding + height + margin.top + margin.bottom)
             .append("g")

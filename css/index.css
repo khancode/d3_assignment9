@@ -20,3 +20,39 @@ rect:hover {
 .x.axis path {
     display: none;
 }
+
+#farm {
+    width:1500px;
+    margin: 0 auto;
+}
+
+#viz_container {
+    display: inline-block;
+    width: 1000px;
+    margin: 0 auto;
+    float:left;
+}
+
+#filter_container {
+    display: inline-block;
+    width:150px;
+    height: 700px;
+}
+
+#container {
+    width: 300px;
+    background-color: #ffcc33;
+    margin: auto;
+}
+#first {
+    width: 100px;
+    float: left;
+    height: 300px;
+    background-color: blue;
+}
+#second {
+    width: 200px;
+    float: left;
+    height: 300px;
+    background-color: green;
+}
