@@ -59,13 +59,11 @@ function StackedBarChart() {
             data = newData;
 
             /* DEBUG purposes */
-            for (d in data){
-                console.log('d('+d+'): ');
-                console.log('\tMovie: ' + data[d]['Movie']);
-                console.log('\tWorldwide Gross $: ' + data[d]['Worldwide Gross $'])
-            }
-
-            //console.log('data: ' + JSON.stringify(data));
+            //for (d in data){
+            //    console.log('d('+d+'): ');
+            //    console.log('\tMovie: ' + data[d]['Movie']);
+            //    console.log('\tWorldwide Gross $: ' + data[d]['Worldwide Gross $'])
+            //}
 
             color.domain(d3.keys(data[0]).filter(function (key) {
                 return key !== "Movie";
@@ -149,7 +147,7 @@ function StackedBarChart() {
                 });
 
             // Set filter for stacked bar chart
-            $filter.setSelector();
+            //$filter.setSelector();
 
         });
     };
