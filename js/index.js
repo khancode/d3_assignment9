@@ -3,7 +3,7 @@
  */
 
 /* Starting visualization */
-    $stacked_bar_chart.farm([]);
+    $stacked_bar_chart.farm([], -1);
     //$bar_chart.farm('Worldwide Gross $');
 
 /* Filters */

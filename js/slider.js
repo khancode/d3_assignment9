@@ -3,19 +3,34 @@
  */
 
 $slider = new Slider();
-$slider.init();
+//$slider.init(5000000);
 
 function Slider() {
 
-    this.init = function() {
-        d3.select('#slider4')
+    _this = this;
+    _this.maxVal = null;
+
+    this.init = function(maxVal) {
+        _this.maxVal = maxVal;
+
+        d3.select('#slider4text').text('Movies <= $' + _this.maxVal);
+
+        d3.select('#slider4').append("div").attr("id", "sliderComponent")
             .call(d3.slider()
                 .axis(true)
-
-                .min(0).max(2100).step(5)
+                .min(0).max(_this.maxVal).step(5)
             .on("slide", function(evt, value) {
-                d3.select('#slider4text').text('$' + value);
+                d3.select('#slider4text').text('Movies <= $' + value);
+
+                $stacked_bar_chart.removeFarm();
+                $stacked_bar_chart.farm($stacked_bar_chart.categoriesArr, value);
             })
-                .value(2100));
+            .value(_this.maxVal));
+    };
+
+    this.remove = function() {
+        d3.select("#sliderComponent").remove();
     }
+
+    this.getMaxVal = function() { return _this.maxVal; }
 }

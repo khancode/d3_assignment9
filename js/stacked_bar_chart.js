@@ -8,17 +8,12 @@ $stacked_bar_chart = new StackedBarChart();
 function StackedBarChart() {
 
     _this = this;
-    _this.x = null;
-    _this.y = null;
-    _this.svg = null;
-    _this.data = null;
-    _this.movie = null;
-    _this.tip = null;
+    _this.categoriesArr = null;
 
-    _this.legend = null;
-
-    this.farm = function(categoriesArr)
+    this.farm = function(categoriesArr, maxVal)
     {
+        _this.categoriesArr = categoriesArr;
+
         d3_formatValuePrefixes();
 
         var margin = {top: 20, right: 20, bottom: 30, left: 60},
@@ -32,7 +27,6 @@ function StackedBarChart() {
         var y = d3.scale.linear()
             .rangeRound([height, 0]);
 
-
         var colorCode = [];
         colorCode['Production Budget $'] = "#FF3300";
         colorCode['Domestic Gross $'] = "#5ad75a";
@@ -43,7 +37,7 @@ function StackedBarChart() {
             colorArr = ["#FF3300", "#5ad75a", "#28a428"];
         }
         else {
-            for (c in categoriesArr) {
+            for (var c in categoriesArr) {
                 var category = categoriesArr[c];
                 colorArr.push(colorCode[category]);
             }
@@ -51,9 +45,6 @@ function StackedBarChart() {
 
         var color = d3.scale.ordinal()
             .range(colorArr);
-            //.range(["#FF3300", "#5ad75a", "#28a428"]);
-        // #FF3300 red, #5ad75a light green, #28a428 dark green
-
 
         var xAxis = d3.svg.axis()
             .scale(x)
@@ -73,7 +64,7 @@ function StackedBarChart() {
             .offset([-10, 0])
             .html(function(d) {
                 var toolTipText = ""; //"<strong>Money: $</strong> <span style='color:green'>";
-                for (c in categoriesArr) {
+                for (var c in categoriesArr) {
                     var category = categoriesArr[c];
                     toolTipText += '<strong>'+category+'</strong>' + "<span style='color:green'>" + d[category] + '</span><br>';
                 }
@@ -81,41 +72,61 @@ function StackedBarChart() {
                 return toolTipText;
             });
 
-        _this.tip = tip;
-
         var svg = d3.select("#viz_container").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", labelPadding + height + margin.top + margin.bottom)
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        //_this.svg = svg;
-
         svg.call(tip);
 
         d3.csv("Movies.csv", function (error, data) {
 
-            _this.data = data;
-
             var newData = new Array();
 
-            for (d in data) {
+            for (var d in data) {
                 newData.push([]);
-                if (categoriesArr == null || categoriesArr.length == 0) {
-                    newData[d]['Movie'] = data[d]['Movie'];
-                    newData[d]['Production Budget $'] = data[d]['Production Budget $'];
-                    newData[d]['Domestic Gross $'] = data[d]['Domestic Gross $'];
-                    newData[d]['Worldwide Gross $'] = data[d]['Worldwide Gross $'];
+                var sum = 0;
+                var arr = [];
+                arr['Movie'] = data[d]['Movie'];
+                var arrCats = []; // holds categories of arr
+                for (var c in categoriesArr) {
+                    var category = categoriesArr[c];
+                    arrCats[category] = data[d][category];
+
+                    sum += parseInt(data[d][category]);
+                }
+
+                // Money filter. -1 is sentinel value for no max.
+                if (maxVal == -1 || sum <= maxVal) {
+                    for (var catName in arrCats)
+                        arr[catName] = arrCats[catName];
                 }
                 else {
-                    for (c in categoriesArr) {
-                        var category = categoriesArr[c];
-
-                        newData[d]['Movie'] = data[d]['Movie'];
-                        newData[d][category] = data[d][category];
-                    }
+                    for (var catName in arrCats)
+                        arr[catName] = 0;
                 }
+
+                newData[d] = arr;
             }
+
+            // Find max value
+            var maxValueFound = 0;
+            for (var d in newData) {
+                var sum = 0;
+                for (var c in categoriesArr) {
+                    var category = categoriesArr[c];
+                    //console.log('val: ' + newData[d][category]);
+                    sum += parseInt(newData[d][category]);
+                }
+                if (parseInt(newData[d][category]) > maxValueFound)
+                    maxValueFound = newData[d][category];
+            }
+
+            console.log('maxValueFound: ' + maxValueFound);
+
+            if ($slider.getMaxVal() == null)
+                $slider.init(maxValueFound);
 
             // Replace the data array with a subdata array that only
             // holds Production Budget $, Domestic Gross $, and
@@ -163,7 +174,7 @@ function StackedBarChart() {
                 .attr("class", "y axis")
                 .call(yAxis);
 
-            _this.movie = svg.selectAll(".movies")
+            var movie = svg.selectAll(".movies")
                 .data(data)
                 .enter().append("g")
                 .attr("class", "g")
@@ -173,7 +184,7 @@ function StackedBarChart() {
                 .on('mouseover', tip.show)
                 .on('mouseout', tip.hide);
 
-            _this.movie.selectAll("rect")
+            movie.selectAll("rect")
                 .data(function (d) {
                     return d.money;
                 })
@@ -215,11 +226,6 @@ function StackedBarChart() {
             // Set filter for stacked bar chart
             //$filter.setSelector();
 
-            _this.svg = svg;
-
-            _this.x = x;
-            _this.y = y;
-            _this.legend = legend;
         });
     };
 
