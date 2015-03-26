@@ -30,7 +30,7 @@ function Filter() {
         //console.log("checkedArr: " + _this.checkedArr);
 
         $stacked_bar_chart.removeFarm();
-        $stacked_bar_chart.farm(_this.checkedArr, -1);
+        $stacked_bar_chart.farm(_this.checkedArr, $slider.getMaxVal());
 
     }
 }

@@ -110,23 +110,24 @@ function StackedBarChart() {
                 newData[d] = arr;
             }
 
-            // Find max value
-            var maxValueFound = 0;
-            for (var d in newData) {
-                var sum = 0;
-                for (var c in categoriesArr) {
-                    var category = categoriesArr[c];
-                    //console.log('val: ' + newData[d][category]);
-                    sum += parseInt(newData[d][category]);
+            if ($slider.getMaxVal() == null) {
+                // Find max value
+                var maxValueFound = 0;
+                for (var d in newData) {
+                    var sum = 0;
+                    for (var c in categoriesArr) {
+                        var category = categoriesArr[c];
+                        //console.log('val: ' + newData[d][category]);
+                        sum += parseInt(newData[d][category]);
+                    }
+                    if (sum > maxValueFound)
+                        maxValueFound = newData[d][category];
                 }
-                if (parseInt(newData[d][category]) > maxValueFound)
-                    maxValueFound = newData[d][category];
-            }
 
-            console.log('maxValueFound: ' + maxValueFound);
+                console.log('maxValueFound: ' + maxValueFound);
 
-            if ($slider.getMaxVal() == null)
                 $slider.init(maxValueFound);
+            }
 
             // Replace the data array with a subdata array that only
             // holds Production Budget $, Domestic Gross $, and

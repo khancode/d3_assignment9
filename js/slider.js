@@ -20,6 +20,7 @@ function Slider() {
                 .axis(true)
                 .min(0).max(_this.maxVal).step(5)
             .on("slide", function(evt, value) {
+                _this.maxVal = value;
                 d3.select('#slider4text').text('Movies <= $' + value);
 
                 $stacked_bar_chart.removeFarm();
