@@ -41,15 +41,17 @@ rect:hover {
     display: inline-block;
     width:250px;
     float:left;
+    border-style:solid;
 }
 
 #slider_container {
     width:1250px;
     margin: 0 auto;
+    background-color:lightskyblue;
 }
 
 svg {
-    height: 650px;
+    height: 600px;
 }
 
 /*#container {*/
