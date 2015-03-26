@@ -11,7 +11,7 @@ function StackedBarChart() {
     {
         d3_formatValuePrefixes();
 
-        var margin = {top: 20, right: 20, bottom: 30, left: 40},
+        var margin = {top: 20, right: 20, bottom: 30, left: 60},
             width = 1000 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
         labelPadding = 200;
