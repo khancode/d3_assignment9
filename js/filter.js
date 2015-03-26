@@ -29,7 +29,7 @@ function NewFilter() {
 
         if (checkBox.is(':checked')) {
             console.log('Added: ' + category);
-            _this.checkedArr.push(category)
+            _this.checkedArr.push(category);
         }
         else {
             console.log('Removed: ' + category);
@@ -39,7 +39,10 @@ function NewFilter() {
         console.log("checkedArr: " + _this.checkedArr);
 
         $stacked_bar_chart.removeFarm();
-        $bar_chart.farm(category);
+        $stacked_bar_chart.farm(_this.checkedArr);
+
+        //$bar_chart.farm(category);
+
     }
 }
 

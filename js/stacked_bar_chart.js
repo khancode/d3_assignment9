@@ -7,7 +7,7 @@ $stacked_bar_chart = new StackedBarChart();
 
 function StackedBarChart() {
 
-    this.farm = function()
+    this.farm = function(categoriesArr)
     {
         d3_formatValuePrefixes();
 
@@ -47,10 +47,20 @@ function StackedBarChart() {
 
             for (d in data) {
                 newData.push([]);
-                newData[d]['Movie'] = data[d]['Movie'];
-                newData[d]['Production Budget $'] = data[d]['Production Budget $'];
-                newData[d]['Domestic Gross $'] = data[d]['Domestic Gross $'];
-                newData[d]['Worldwide Gross $'] = data[d]['Worldwide Gross $'];
+                if (categoriesArr == null || categoriesArr.length == 0) {
+                    newData[d]['Movie'] = data[d]['Movie'];
+                    newData[d]['Production Budget $'] = data[d]['Production Budget $'];
+                    newData[d]['Domestic Gross $'] = data[d]['Domestic Gross $'];
+                    newData[d]['Worldwide Gross $'] = data[d]['Worldwide Gross $'];
+                }
+                else {
+                    for (c in categoriesArr) {
+                        var category = categoriesArr[c];
+
+                        newData[d]['Movie'] = data[d]['Movie'];
+                        newData[d][category] = data[d][category];
+                    }
+                }
             }
 
             // Replace the data array with a subdata array that only

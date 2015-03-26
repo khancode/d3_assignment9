@@ -33,7 +33,7 @@ function BarChart() {
             .attr('class', 'd3-tip')
             .offset([-10, 0])
             .html(function(d) {
-                return "<strong>Money: $</strong> <span style='color:red'>" + d.frequency + "</span>";
+                return "<strong>Money: $</strong> <span style='color:green'>" + d.frequency + "</span>";
             });
 
         var svg = d3.select("#viz_container").append("svg")
