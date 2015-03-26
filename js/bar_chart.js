@@ -29,11 +29,20 @@ function BarChart() {
             //.ticks(10, "%");
             .tickFormat(d3.format(".2s"));
 
+        var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-10, 0])
+            .html(function(d) {
+                return "<strong>Money: $</strong> <span style='color:red'>" + d.frequency + "</span>";
+            });
+
         var svg = d3.select("#viz_container").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", labelPadding + height + margin.top + margin.bottom)
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        svg.call(tip);
 
         d3.tsv("Movies.tsv", type, function(error, data) {
 
@@ -69,7 +78,9 @@ function BarChart() {
                 .attr("x", function(d) { return x(d.letter); })
                 .attr("width", x.rangeBand())
                 .attr("y", function(d) { return y(d.frequency); })
-                .attr("height", function(d) { return height - y(d.frequency); });
+                .attr("height", function(d) { return height - y(d.frequency); })
+                .on('mouseover', tip.show)
+                .on('mouseout', tip.hide);
 
         });
 
