@@ -41,8 +41,6 @@ function NewFilter() {
         $stacked_bar_chart.removeFarm();
         $stacked_bar_chart.farm(_this.checkedArr);
 
-        //$bar_chart.farm(category);
-
     }
 }
 

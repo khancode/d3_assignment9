@@ -7,6 +7,16 @@ $stacked_bar_chart = new StackedBarChart();
 
 function StackedBarChart() {
 
+    _this = this;
+    _this.x = null;
+    _this.y = null;
+    _this.svg = null;
+    _this.data = null;
+    _this.movie = null;
+    _this.tip = null;
+
+    _this.legend = null;
+
     this.farm = function(categoriesArr)
     {
         d3_formatValuePrefixes();
@@ -21,6 +31,7 @@ function StackedBarChart() {
 
         var y = d3.scale.linear()
             .rangeRound([height, 0]);
+
 
         var colorCode = [];
         colorCode['Production Budget $'] = "#FF3300";
@@ -70,15 +81,21 @@ function StackedBarChart() {
                 return toolTipText;
             });
 
+        _this.tip = tip;
+
         var svg = d3.select("#viz_container").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", labelPadding + height + margin.top + margin.bottom)
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+        //_this.svg = svg;
+
         svg.call(tip);
 
         d3.csv("Movies.csv", function (error, data) {
+
+            _this.data = data;
 
             var newData = new Array();
 
@@ -89,7 +106,6 @@ function StackedBarChart() {
                     newData[d]['Production Budget $'] = data[d]['Production Budget $'];
                     newData[d]['Domestic Gross $'] = data[d]['Domestic Gross $'];
                     newData[d]['Worldwide Gross $'] = data[d]['Worldwide Gross $'];
-                    newData
                 }
                 else {
                     for (c in categoriesArr) {
@@ -147,7 +163,7 @@ function StackedBarChart() {
                 .attr("class", "y axis")
                 .call(yAxis);
 
-            var movie = svg.selectAll(".movies")
+            _this.movie = svg.selectAll(".movies")
                 .data(data)
                 .enter().append("g")
                 .attr("class", "g")
@@ -155,9 +171,9 @@ function StackedBarChart() {
                     return "translate(" + x(d.Movie) + ",0)";
                 })
                 .on('mouseover', tip.show)
-                .on('mouseout', tip.hide);;
+                .on('mouseout', tip.hide);
 
-            movie.selectAll("rect")
+            _this.movie.selectAll("rect")
                 .data(function (d) {
                     return d.money;
                 })
@@ -199,6 +215,11 @@ function StackedBarChart() {
             // Set filter for stacked bar chart
             //$filter.setSelector();
 
+            _this.svg = svg;
+
+            _this.x = x;
+            _this.y = y;
+            _this.legend = legend;
         });
     };
 

@@ -43,6 +43,15 @@ rect:hover {
     float:left;
 }
 
+#slider_container {
+    width:1250px;
+    margin: 0 auto;
+}
+
+svg {
+    height: 650px;
+}
+
 /*#container {*/
     /*width: 300px;*/
     /*background-color: #ffcc33;*/
