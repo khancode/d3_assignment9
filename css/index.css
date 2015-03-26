@@ -54,24 +54,6 @@ svg {
     height: 600px;
 }
 
-/*#container {*/
-    /*width: 300px;*/
-    /*background-color: #ffcc33;*/
-    /*margin: auto;*/
-/*}*/
-/*#first {*/
-    /*width: 100px;*/
-    /*float: left;*/
-    /*height: 300px;*/
-    /*background-color: blue;*/
-/*}*/
-/*#second {*/
-    /*width: 200px;*/
-    /*float: left;*/
-    /*height: 300px;*/
-    /*background-color: green;*/
-/*}*/
-
 .d3-tip {
     line-height: 1;
     font-weight: bold;

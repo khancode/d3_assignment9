@@ -19,15 +19,15 @@ function Filter() {
         var category = checkBox.val();
 
         if (checkBox.is(':checked')) {
-            console.log('Added: ' + category);
+            //console.log('Added: ' + category);
             _this.checkedArr.push(category);
         }
         else {
-            console.log('Removed: ' + category);
+            //console.log('Removed: ' + category);
             _this.checkedArr.splice( $.inArray(category, _this.checkedArr), 1 );
         }
 
-        console.log("checkedArr: " + _this.checkedArr);
+        //console.log("checkedArr: " + _this.checkedArr);
 
         $stacked_bar_chart.removeFarm();
         $stacked_bar_chart.farm(_this.checkedArr, -1);

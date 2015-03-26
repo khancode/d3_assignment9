@@ -66,7 +66,7 @@ function StackedBarChart() {
                 var toolTipText = ""; //"<strong>Money: $</strong> <span style='color:green'>";
                 for (var c in categoriesArr) {
                     var category = categoriesArr[c];
-                    toolTipText += '<strong>'+category+'</strong>' + "<span style='color:green'>" + d[category] + '</span><br>';
+                    toolTipText += '<strong>'+category+'</strong>' + "<span style='color:"+colorCode[category]+"'>" + d[category] + '</span><br>';
                 }
 
                 return toolTipText;
