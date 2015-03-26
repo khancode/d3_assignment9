@@ -22,9 +22,27 @@ function StackedBarChart() {
         var y = d3.scale.linear()
             .rangeRound([height, 0]);
 
+        var colorCode = [];
+        colorCode['Production Budget $'] = "#FF3300";
+        colorCode['Domestic Gross $'] = "#5ad75a";
+        colorCode['Worldwide Gross $'] = "#28a428";
+
+        var colorArr = [];
+        if (categoriesArr.length == 0) {
+            colorArr = ["#FF3300", "#5ad75a", "#28a428"];
+        }
+        else {
+            for (c in categoriesArr) {
+                var category = categoriesArr[c];
+                colorArr.push(colorCode[category]);
+            }
+        }
+
         var color = d3.scale.ordinal()
-            .range(["#FF3300", "#5ad75a", "#28a428"]);
+            .range(colorArr);
+            //.range(["#FF3300", "#5ad75a", "#28a428"]);
         // #FF3300 red, #5ad75a light green, #28a428 dark green
+
 
         var xAxis = d3.svg.axis()
             .scale(x)
@@ -35,11 +53,30 @@ function StackedBarChart() {
             .orient("left")
             .tickFormat(d3.format(".2s"));
 
+        if (categoriesArr.length == 0) {
+            categoriesArr = ['Production Budget $', 'Domestic Gross $', 'Worldwide Gross $'];
+        }
+
+        var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-10, 0])
+            .html(function(d) {
+                var toolTipText = ""; //"<strong>Money: $</strong> <span style='color:green'>";
+                for (c in categoriesArr) {
+                    var category = categoriesArr[c];
+                    toolTipText += '<strong>'+category+'</strong>' + "<span style='color:green'>" + d[category] + '</span><br>';
+                }
+
+                return toolTipText;
+            });
+
         var svg = d3.select("#viz_container").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", labelPadding + height + margin.top + margin.bottom)
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        svg.call(tip);
 
         d3.csv("Movies.csv", function (error, data) {
 
@@ -52,6 +89,7 @@ function StackedBarChart() {
                     newData[d]['Production Budget $'] = data[d]['Production Budget $'];
                     newData[d]['Domestic Gross $'] = data[d]['Domestic Gross $'];
                     newData[d]['Worldwide Gross $'] = data[d]['Worldwide Gross $'];
+                    newData
                 }
                 else {
                     for (c in categoriesArr) {
@@ -115,7 +153,9 @@ function StackedBarChart() {
                 .attr("class", "g")
                 .attr("transform", function (d) {
                     return "translate(" + x(d.Movie) + ",0)";
-                });
+                })
+                .on('mouseover', tip.show)
+                .on('mouseout', tip.hide);;
 
             movie.selectAll("rect")
                 .data(function (d) {
